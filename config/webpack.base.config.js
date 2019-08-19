@@ -11,7 +11,7 @@ const APP_DIR = path.resolve(__dirname, '../src');
 
 module.exports = (env, argv) => {
 
-  const { PLATFORM, VERSION } = argv;
+  const { PLATFORM, VERSION } = env;
 
   return merge([
       {
@@ -41,8 +41,8 @@ module.exports = (env, argv) => {
             filename: './index.html'
           }),
           new webpack.DefinePlugin({ 
-            // 'process.env.VERSION': JSON.stringify(argv.VERSION),
-            'process.env.PLATFORM': JSON.stringify(argv.PLATFORM)
+            'process.env.VERSION': JSON.stringify(env.VERSION),
+            'process.env.PLATFORM': JSON.stringify(env.PLATFORM)
           }),
           new CopyWebpackPlugin([ { from: 'src/static' } ]),
         ],
