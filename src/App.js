@@ -6,7 +6,7 @@ class App extends React.Component {
 
     this.state = {
       news: {},
-      Foo: null
+      Foo: null,
     };
   }
 
@@ -16,15 +16,15 @@ class App extends React.Component {
   }
 
   async fetchApi() {
-    const url =
-      'https://newsapi.org/v2/everything?q=bitcoin&from=2019-07-19&sortBy=publishedAt&apiKey=109cafd7e6a94b0cae047707712c8c25';
+    const API_KEY = '109cafd7e6a94b0cae047707712c8c25';
+    const url = `https://newsapi.org/v2/everything?q=bitcoin&from=2019-07-19&sortBy=publishedAt&apiKey=${API_KEY}`;
 
     try {
       const response = await fetch(url);
       const responseParsed = await response.json();
 
       this.setState({
-        news: responseParsed
+        news: responseParsed,
       });
     } catch (err) {
       console.log(`Request error ${err}`);
@@ -35,19 +35,20 @@ class App extends React.Component {
   loadComponent() {
     import(/* webpackChunkName: 'Foo' */ './Foo').then(Foo => {
       this.setState({
-        Foo: Foo.default
+        Foo: Foo.default,
       });
     });
   }
 
   render() {
-    const { Foo } = this.state;
+    const { Foo, news } = this.state;
 
     return (
       <div>
-        <p> hello world </p> <img src="/dist/images/dog.jpg" /> 
-        {Foo ? <Foo/> : null}
-        <p> {JSON.stringify(this.state.news.articles)} </p>
+        <p> hello world </p>
+        <img src="/dist/images/dog.jpg" alt="dog" />
+        {Foo ? <Foo /> : null}
+        <p> {JSON.stringify(news.articles)} </p>
       </div>
     );
   }
